@@ -1,0 +1,27 @@
+/**
+	 * Launch CMD to connect in QuiteNet Network
+	 *
+	 * @param unknown_type $IRCtxt
+	 */
+	
+	private function ConnexionLaunch($IRCtxt)
+	{
+		if(preg_match("/Notice -- Client connecting on port (.*): ([^ ]+) \\(([^@]+)@([^\\)]+)\\)/", $IRCtxt, $T))
+		{
+			$this->main->MyConn->put("PRIVMSG ".$T[2]." VERSION");
+		}
+	}
+	
+	/**
+	 * Analyze CTCP VERSION RESULT
+	 *
+	 * @param unknown_type $IRCtxt
+	 */
+	
+	private function AnalyzeResult ($IRCtxt)
+	{
+		if(preg_match('`^:(.*?)!(.*?) NOTICE '.preg_quote(IRCConn::$myBotName, '`').' :VERSION (.*)`', $IRCtxt, $T))
+		{
+			$this->main->MyConn->put("PRIVMSG #IRCOPS TEST // CONNEXION // ".$T[1]." // ".$T[2]." // ".$T[3]." // ".$T[4]." // ".$T[5]." // ".$T[6]."");
+		}
+	}
